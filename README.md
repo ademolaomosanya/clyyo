@@ -17,3 +17,41 @@ Users roles below, using NextAuth.js for authetication.
 | Sponsor   | View sponsored events, leads, visibility, analytics              |
 | Admin     | Manage whole Clyyo platform                                      |
 
+# Frontend(Next.js)
+- Landing pages
+- Browsing event and details pages
+- Dashboards
+- Forms
+- Authentication UI
+- Server Components
+- Calling the API
+- File uploads
+- Displaying analytics
+
+# Backend (NestJS) 
+- Authentication
+- Authorization (RBAC)
+- Events
+- Registrations
+- Team formation
+- QR generation
+- Certificates
+- AI orchestration
+- Payment processing
+- Email sending
+- Notifications
+- Travel grants
+- Analytics
+- Webhooks
+- Background jobs
+
+# Worker Service
+Examples:
+- Email Queue
+- Generate Certificates
+- Generate QR Codes
+- AI Review
+- AI Team Matching
+- Attendance Prediction
+- Image Compression
+- PDF Generation
