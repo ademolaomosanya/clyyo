@@ -1,0 +1,17 @@
+{
+  "name": "clyyo",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Clyyo monorepo for the web app, API, worker, and shared packages.",
+  "scripts": {
+    "dev": "pnpm -r --parallel --if-present dev",
+    "build": "pnpm -r --if-present build",
+    "lint": "pnpm -r --if-present lint",
+    "test": "pnpm -r --if-present test",
+    "typecheck": "pnpm -r --if-present typecheck"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "pnpm@10.0.0"
+}
