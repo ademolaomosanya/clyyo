@@ -8,6 +8,8 @@ Hi i'm building Clyyo, an event management platform with  team matching, QR chec
 - [Backend first: NestJS API](docs/03-backend-api-first.md): explains the first API files and health endpoint.
 - [Swagger API docs](docs/04-swagger-api-docs.md): explains the browser API documentation page.
 - [Events module](docs/05-events-module.md): explains the first real backend feature.
+- [DTO validation](docs/06-dto-validation.md): explains how incoming request data is checked.
+- [Prisma and PostgreSQL](docs/07-prisma-postgresql.md): explains the first database layer.
 
 The following diagram shows Clyyo's System Design(subject to change and get improved as i build):
 #

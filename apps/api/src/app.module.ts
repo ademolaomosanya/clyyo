@@ -6,7 +6,8 @@ import { HealthModule } from "./health/health.module";
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal: true
+      isGlobal: true,
+      envFilePath: [".env", "../../.env"]
     }),
     HealthModule,
     EventsModule

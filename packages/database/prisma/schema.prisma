@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum EventType {
+  hackathon
+  conference
+  workshop
+  meetup
+}
+
+enum EventStatus {
+  draft
+  published
+  cancelled
+}
+
+model Event {
+  id          String      @id @default(cuid())
+  title       String
+  description String
+  type        EventType
+  location    String
+  status      EventStatus @default(draft)
+  startsAt    DateTime
+  endsAt      DateTime
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@map("events")
+}
