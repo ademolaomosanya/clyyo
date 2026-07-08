@@ -19,6 +19,33 @@ enum EventStatus {
   cancelled
 }
 
+enum UserRole {
+  organizer
+  sponsor
+  participant
+  admin
+}
+
+enum RegistrationStatus {
+  registered
+  checked_in
+  cancelled
+}
+
+model User {
+  id              String   @id @default(cuid())
+  email           String   @unique
+  name            String?
+  passwordHash    String?
+  role            UserRole @default(participant)
+  organizedEvents Event[]  @relation("EventOrganizer")
+  registrations   Registration[]
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("users")
+}
+
 model Event {
   id          String      @id @default(cuid())
   title       String
@@ -26,10 +53,30 @@ model Event {
   type        EventType
   location    String
   status      EventStatus @default(draft)
+  organizerId String?
+  organizer   User?       @relation("EventOrganizer", fields: [organizerId], references: [id], onDelete: SetNull)
+  registrations Registration[]
   startsAt    DateTime
   endsAt      DateTime
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 
+  @@index([organizerId])
   @@map("events")
+}
+
+model Registration {
+  id        String             @id @default(cuid())
+  userId    String
+  eventId   String
+  status    RegistrationStatus @default(registered)
+  user      User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  event     Event              @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
+
+  @@unique([userId, eventId])
+  @@index([eventId])
+  @@index([userId])
+  @@map("registrations")
 }

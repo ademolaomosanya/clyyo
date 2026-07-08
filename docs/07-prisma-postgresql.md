@@ -46,7 +46,13 @@ infrastructure/docker/docker-compose.yml
 Start it with:
 
 ```bash
-docker compose -f infrastructure/docker/docker-compose.yml up -d
+pnpm db:up
+```
+
+Or run Docker Compose directly from the repo root:
+
+```bash
+docker compose --env-file .env -f infrastructure/docker/docker-compose.yml up -d
 ```
 
 ## Environment Variables
@@ -70,7 +76,7 @@ pnpm --filter @clyyo/database db:generate
 Run a migration:
 
 ```bash
-pnpm --filter @clyyo/database db:migrate
+pnpm db:migrate
 ```
 
 Open Prisma Studio:

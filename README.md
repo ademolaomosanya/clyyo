@@ -10,6 +10,10 @@ Hi i'm building Clyyo, an event management platform with  team matching, QR chec
 - [Events module](docs/05-events-module.md): explains the first real backend feature.
 - [DTO validation](docs/06-dto-validation.md): explains how incoming request data is checked.
 - [Prisma and PostgreSQL](docs/07-prisma-postgresql.md): explains the first database layer.
+- [Users and roles](docs/08-users-and-roles.md): explains the user model and Clyyo roles.
+- [Event organizers](docs/09-event-organizers.md): explains event ownership and organizer rules.
+- [Real auth foundation](docs/10-real-auth.md): explains register, login, JWTs, and protected routes.
+- [Event registrations](docs/11-event-registrations.md): explains participant event registration.
 
 The following diagram shows Clyyo's System Design(subject to change and get improved as i build):
 #

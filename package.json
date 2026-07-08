@@ -6,6 +6,10 @@
   "scripts": {
     "dev": "pnpm -r --parallel --if-present dev",
     "build": "pnpm -r --if-present build",
+    "db:up": "docker compose --env-file .env -f infrastructure/docker/docker-compose.yml up -d",
+    "db:down": "docker compose --env-file .env -f infrastructure/docker/docker-compose.yml down",
+    "db:down:volumes": "docker compose --env-file .env -f infrastructure/docker/docker-compose.yml down -v",
+    "db:migrate": "pnpm --filter @clyyo/database db:migrate",
     "lint": "pnpm -r --if-present lint",
     "test": "pnpm -r --if-present test",
     "typecheck": "pnpm -r --if-present typecheck"

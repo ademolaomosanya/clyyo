@@ -4,6 +4,9 @@ export class EventResponseDto {
   @ApiProperty({ example: "evt_1" })
   id!: string;
 
+  @ApiProperty({ example: "clx123abc0000user", nullable: true })
+  organizerId!: string | null;
+
   @ApiProperty({ example: "Clyyo Hack Lagos 2026" })
   title!: string;
 

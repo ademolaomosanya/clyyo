@@ -1,1 +1,1 @@
-export type UserRole = "visitor" | "attendee" | "organizer" | "reviewer" | "sponsor" | "admin";
+export type UserRole = "organizer" | "sponsor" | "participant" | "admin";
