@@ -32,34 +32,76 @@ enum RegistrationStatus {
   cancelled
 }
 
+enum ApplicationStatus {
+  submitted
+  accepted
+  rejected
+  waitlisted
+}
+
+enum TeamStatus {
+  forming
+  locked
+}
+
+enum TeamMemberRole {
+  lead
+  member
+}
+
+enum SponsorshipStatus {
+  active
+  paused
+  ended
+}
+
+enum NotificationType {
+  registration_created
+  application_status_changed
+  check_in_completed
+  team_member_added
+  sponsorship_created
+  event_review_submitted
+}
+
 model User {
-  id              String   @id @default(cuid())
-  email           String   @unique
+  id              String         @id @default(cuid())
+  email           String         @unique
   name            String?
   passwordHash    String?
-  role            UserRole @default(participant)
-  organizedEvents Event[]  @relation("EventOrganizer")
+  role            UserRole       @default(participant)
+  organizedEvents Event[]        @relation("EventOrganizer")
   registrations   Registration[]
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  applications    Application[]
+  teamMemberships TeamMember[]
+  sponsorships    Sponsorship[]  @relation("SponsorSponsorships")
+  eventReviews    EventReview[]
+  notifications   Notification[]
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
 
   @@map("users")
 }
 
 model Event {
-  id          String      @id @default(cuid())
-  title       String
-  description String
-  type        EventType
-  location    String
-  status      EventStatus @default(draft)
-  organizerId String?
-  organizer   User?       @relation("EventOrganizer", fields: [organizerId], references: [id], onDelete: SetNull)
+  id            String         @id @default(cuid())
+  title         String
+  description   String
+  type          EventType
+  location      String
+  status        EventStatus    @default(draft)
+  organizerId   String?
+  organizer     User?          @relation("EventOrganizer", fields: [organizerId], references: [id], onDelete: SetNull)
   registrations Registration[]
-  startsAt    DateTime
-  endsAt      DateTime
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  applications  Application[]
+  teams         Team[]
+  teamMembers   TeamMember[]
+  sponsorships  Sponsorship[]
+  reviews       EventReview[]
+  startsAt      DateTime
+  endsAt        DateTime
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
 
   @@index([organizerId])
   @@map("events")
@@ -79,4 +121,112 @@ model Registration {
   @@index([eventId])
   @@index([userId])
   @@map("registrations")
+}
+
+model Application {
+  id         String            @id @default(cuid())
+  userId     String
+  eventId    String
+  motivation String
+  skills     String[]
+  goals      String[]
+  status     ApplicationStatus @default(submitted)
+  user       User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  event      Event             @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  createdAt  DateTime          @default(now())
+  updatedAt  DateTime          @updatedAt
+
+  @@unique([userId, eventId])
+  @@index([eventId])
+  @@index([userId])
+  @@map("applications")
+}
+
+model Team {
+  id          String       @id @default(cuid())
+  eventId     String
+  name        String
+  description String?
+  maxSize     Int          @default(4)
+  status      TeamStatus   @default(forming)
+  event       Event        @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  members     TeamMember[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@unique([eventId, name])
+  @@index([eventId])
+  @@map("teams")
+}
+
+model TeamMember {
+  id        String         @id @default(cuid())
+  teamId    String
+  eventId   String
+  userId    String
+  role      TeamMemberRole @default(member)
+  team      Team           @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  event     Event          @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  @@unique([teamId, userId])
+  @@unique([eventId, userId])
+  @@index([teamId])
+  @@index([eventId])
+  @@index([userId])
+  @@map("team_members")
+}
+
+model Sponsorship {
+  id             String            @id @default(cuid())
+  eventId        String
+  sponsorId      String
+  packageName    String
+  visibilityTier String
+  status         SponsorshipStatus @default(active)
+  event          Event             @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  sponsor        User              @relation("SponsorSponsorships", fields: [sponsorId], references: [id], onDelete: Cascade)
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+
+  @@unique([eventId, sponsorId])
+  @@index([eventId])
+  @@index([sponsorId])
+  @@map("sponsorships")
+}
+
+model EventReview {
+  id        String   @id @default(cuid())
+  eventId   String
+  userId    String
+  rating    Int
+  comment   String?
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([eventId, userId])
+  @@index([eventId])
+  @@index([userId])
+  @@map("event_reviews")
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  type      NotificationType
+  title     String
+  body      String
+  metadata  Json?
+  readAt    DateTime?
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+
+  @@index([userId])
+  @@index([readAt])
+  @@map("notifications")
 }

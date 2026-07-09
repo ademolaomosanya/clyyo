@@ -14,6 +14,14 @@ Hi i'm building Clyyo, an event management platform with  team matching, QR chec
 - [Event organizers](docs/09-event-organizers.md): explains event ownership and organizer rules.
 - [Real auth foundation](docs/10-real-auth.md): explains register, login, JWTs, and protected routes.
 - [Event registrations](docs/11-event-registrations.md): explains participant event registration.
+- [Check-ins](docs/12-check-ins.md): explains attendee check-in for registered participants.
+- [QR payloads](docs/13-qr-payloads.md): explains backend QR payloads for registrations.
+- [Applications](docs/14-applications.md): explains participant applications and organizer review.
+- [Team formation](docs/15-team-formation.md): explains event teams and team members.
+- [Organizer analytics](docs/16-organizer-analytics.md): explains event metrics for organizer dashboards.
+- [Sponsors](docs/17-sponsors.md): explains sponsored events, leads, visibility, and sponsor analytics.
+- [Event reviews](docs/19-event-reviews.md): explains participant feedback after completed events.
+- [Notifications](docs/20-notifications.md): explains user notifications and read/unread state.
 
 The following diagram shows Clyyo's System Design(subject to change and get improved as i build):
 #

@@ -2,12 +2,12 @@ import { Module } from "@nestjs/common";
 import { AuthModule } from "../auth/auth.module";
 import { DatabaseModule } from "../database/database.module";
 import { NotificationsModule } from "../notifications/notifications.module";
-import { RegistrationsController } from "./registrations.controller";
-import { RegistrationsService } from "./registrations.service";
+import { SponsorsController } from "./sponsors.controller";
+import { SponsorsService } from "./sponsors.service";
 
 @Module({
   imports: [AuthModule, DatabaseModule, NotificationsModule],
-  controllers: [RegistrationsController],
-  providers: [RegistrationsService]
+  controllers: [SponsorsController],
+  providers: [SponsorsService]
 })
-export class RegistrationsModule {}
+export class SponsorsModule {}

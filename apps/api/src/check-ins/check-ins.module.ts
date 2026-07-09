@@ -2,12 +2,12 @@ import { Module } from "@nestjs/common";
 import { AuthModule } from "../auth/auth.module";
 import { DatabaseModule } from "../database/database.module";
 import { NotificationsModule } from "../notifications/notifications.module";
-import { RegistrationsController } from "./registrations.controller";
-import { RegistrationsService } from "./registrations.service";
+import { CheckInsController } from "./check-ins.controller";
+import { CheckInsService } from "./check-ins.service";
 
 @Module({
   imports: [AuthModule, DatabaseModule, NotificationsModule],
-  controllers: [RegistrationsController],
-  providers: [RegistrationsService]
+  controllers: [CheckInsController],
+  providers: [CheckInsService]
 })
-export class RegistrationsModule {}
+export class CheckInsModule {}

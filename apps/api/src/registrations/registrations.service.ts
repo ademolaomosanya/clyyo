@@ -1,11 +1,15 @@
 import { ConflictException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
-import { Prisma, Registration, UserRole } from "@prisma/client";
+import { NotificationType, Prisma, Registration, UserRole } from "@prisma/client";
 import { AuthenticatedUser } from "../auth/types/authenticated-user";
 import { PrismaService } from "../database/prisma.service";
+import { NotificationsService } from "../notifications/notifications.service";
 
 @Injectable()
 export class RegistrationsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly notificationsService: NotificationsService
+  ) {}
 
   async registerForEvent(eventId: string, currentUser: AuthenticatedUser) {
     if (currentUser.role !== UserRole.participant) {
@@ -27,6 +31,17 @@ export class RegistrationsService {
         data: {
           eventId,
           userId: currentUser.id
+        }
+      });
+
+      await this.notificationsService.createForUser({
+        userId: currentUser.id,
+        type: NotificationType.registration_created,
+        title: "Registration confirmed",
+        body: `You are registered for ${event.title}.`,
+        metadata: {
+          eventId,
+          registrationId: registration.id
         }
       });
 
